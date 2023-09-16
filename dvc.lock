@@ -1,0 +1,25 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python steps/1_preparation/preparation.py data/djinni data/prepared
+    deps:
+    - path: data/djinni
+      hash: md5
+      md5: 1ddc898b1eaa372610c89f50b73c95fb.dir
+      size: 1276445164
+      nfiles: 5
+    - path: steps/1_preparation/preparation.py
+      hash: md5
+      md5: 54bcef8b02fe2505ba8cc7b293f53c03
+      size: 1221
+    params:
+      params.yaml:
+        prepare.candidates_file: candidates.csv
+        prepare.jobs_file: jobs.csv
+        prepare.lang_detect_model: lang_detect_model
+    outs:
+    - path: data/prepared
+      hash: md5
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
