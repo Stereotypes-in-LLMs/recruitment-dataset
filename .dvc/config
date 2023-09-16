@@ -1,0 +1,6 @@
+[core]
+    remote = HiringLLM_dataset
+    autostage = true
+['remote "HiringLLM_dataset"']
+    url = gdrive://1QLwvTiDZ-MK7lRQChc_j_m2lZsBBCo0q
+    gdrive_acknowledge_abuse = true
