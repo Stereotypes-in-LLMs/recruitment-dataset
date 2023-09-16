@@ -1,0 +1,12 @@
+stages:
+  prepare:
+    cmd: python steps/1_preparation/preparation.py data/djinni data/prepared
+    deps:
+    - data/djinni
+    - steps/1_preparation/preparation.py
+    outs:
+    - data/prepared
+    params:
+    - prepare.jobs_file
+    - prepare.candidates_file
+    - prepare.lang_detect_model

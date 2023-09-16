@@ -1,0 +1,4 @@
+prepare:
+  jobs_file: jobs.csv
+  candidates_file: candidates.csv
+  lang_detect_model: lang_detect_model
