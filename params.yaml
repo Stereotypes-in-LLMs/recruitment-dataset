@@ -1,4 +1,7 @@
-prepare:
-  jobs_file: jobs.csv
-  candidates_file: candidates.csv
-  lang_detect_model: lang_detect_model
+candidate_prepare:
+  input_file: candidates.csv
+  output_file: candidates_prepared.csv
+
+job_prepare:
+  input_file: jobs.csv
+  output_file: jobs_prepared.csv
