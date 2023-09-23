@@ -1,14 +1,13 @@
-import tqdm
 import logging
-import numpy as np
-from typping import Any 
+from tqdm import tqdm
+from typing import Any 
 
 import concurrent
 from concurrent.futures.thread import ThreadPoolExecutor
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def concurrent_processor(items: list[Any], func: object) -> list(Any):
+def concurrent_processor(items: list[Any], func: object) -> list[Any]:
     """"
     Apply function to each item in list of items in parallel
 

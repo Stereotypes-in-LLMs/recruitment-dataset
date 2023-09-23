@@ -1,25 +1,29 @@
 schema: '2.0'
 stages:
-  prepare:
-    cmd: python steps/1_preparation/preparation.py data/djinni data/prepared
+  candidate_prepare:
+    cmd: python steps/1_preparation/candidates_preparation.py data/djinni data/prepared
     deps:
     - path: data/djinni
       hash: md5
-      md5: 1ddc898b1eaa372610c89f50b73c95fb.dir
-      size: 1276445164
+      md5: 5ff70f3e8862f06a404c09a7eca5cd0f.dir
+      size: 1276445163
       nfiles: 5
-    - path: steps/1_preparation/preparation.py
+    - path: steps/1_preparation/
       hash: md5
-      md5: 54bcef8b02fe2505ba8cc7b293f53c03
-      size: 1221
+      md5: edfe5f8b5b998cc6897d0ca963d1504d.dir
+      size: 26421
+      nfiles: 10
+    - path: steps/1_preparation/candidates_preparation.py
+      hash: md5
+      md5: 0d119859b0cb5f0a65a09c74e17a1d33
+      size: 1299
     params:
       params.yaml:
-        prepare.candidates_file: candidates.csv
-        prepare.jobs_file: jobs.csv
-        prepare.lang_detect_model: lang_detect_model
+        candidate_prepare.input_file: candidates.csv
+        candidate_prepare.output_file: candidates_prepared.csv
     outs:
     - path: data/prepared
       hash: md5
-      md5: d751713988987e9331980363e24189ce.dir
-      size: 0
-      nfiles: 0
+      md5: dc397ba247c7241b8396d32c9a8ae067.dir
+      size: 116515
+      nfiles: 1

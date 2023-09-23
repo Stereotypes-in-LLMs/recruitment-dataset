@@ -1,14 +1,15 @@
 import pandas as pd
 import numpy as np
 import logging
+import uuid
 
 from src.constants import SUPPORTED_LANGUAGES
 from src.helpers import concurrent_processor
-from langdetect import detect
-from langdetect import DetectorFactory
-DetectorFactory.seed = 0
+from src.lang_detector import lang_detection_func
+
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 class Preprocessing:
     """
@@ -26,7 +27,7 @@ class Preprocessing:
             None
         """
         logging.info("Reading dataset...")
-        self.dataset = pd.DataFrame(input_path)
+        self.dataset = pd.read_csv(input_path)
         self.output_path = output_path
 
     def drop_duplicates(self, dataset_type:str ) -> None:
@@ -54,7 +55,7 @@ class Preprocessing:
             None
         """
         logging.info(f"Detecting language in {column_name} column...")
-        lang_detect_df = pd.DataFrame(concurrent_processor(self.dataset[column_name].unique(), self._lang_detection))
+        lang_detect_df = pd.DataFrame(concurrent_processor(self.dataset[column_name].unique(), lang_detection_func))
         lang_detect_df = lang_detect_df.rename(columns={
             'item': column_name,
             'lang_detect': f'{column_name}_lang'
@@ -78,10 +79,21 @@ class Preprocessing:
         # reset index
         self.dataset.reset_index(drop=True, inplace=True)
         logging.info(f"Filtering supported languages in {column_name} column finished.")
+    
+    def _create_id(self, unique_column: str) -> None:
+        """
+        Create ID column
 
-    @staticmethod
-    def _lang_detection(item) -> dict:
-        return {'item': item, 'lang_detect': detect(item)}
+        Args:
+            unique_column (str): unique column name
+        Returns:
+            None
+        """
+        # hex id from CV column
+        logging.info("Creating ID column...")
+        namespace = uuid.NAMESPACE_URL
+        self.dataset['id'] = self.dataset[unique_column].apply(lambda x: uuid.uuid5(namespace, x))
+        logging.info("Creating ID column finished.")
     
     def save_dataset(self) -> None:
         """"
@@ -101,7 +113,8 @@ class CandidatesPreprocessor(Preprocessing):
                  output_path: str,
                  processor_type: str = "candidates",
                  outlier_threshold: float = 0.05,
-                 lang_detect_columns: list[str] = ["Position", "CV"]) -> None:
+                 lang_detect_columns: list[str] = ["CV"],
+                 id_component: str = 'CV') -> None:
         """
         CandidatesPreprocessing class constructor
 
@@ -111,12 +124,14 @@ class CandidatesPreprocessor(Preprocessing):
             processor_type (str): processor type
             outlier_threshold (float): outlier threshold
             lang_detect_columns (list[str]): columns to detect language
+            id_component (str): id component name
         """
         super().__init__(input_path, output_path)
 
         self.processor_type = processor_type
         self.outlier_threshold = outlier_threshold
         self.lang_detect_columns = lang_detect_columns
+        self.id_component = id_component
 
     def process(self):
         """"
@@ -140,13 +155,16 @@ class CandidatesPreprocessor(Preprocessing):
             self.lang_detection(column)
             self.filter_supported_languages(column)
 
+        # create ID column
+        self._create_id(self.id_component)
+
     def _position_processing(self) -> None:
         """"
         Preprocess POSITION column and drop rows with empty POSITION
         """
         logging.info("Preprocessing POSITION column...")
         # clean all possible symbols from positions
-        self.dataset['Position_cleaned'] = self.dataset['Position'].str.replace('[^a-zA-Zа-яА-Я0-9 ]', '', regex=True)
+        self.dataset['Position_cleaned'] = self.dataset['Position'].str.replace('[^a-zA-Zа-яА-Я ]', '', regex=True)
         self.dataset['Position_cleaned'] = self.dataset['Position_cleaned'].str.strip()
 
         # empty positions equal to None

@@ -1,10 +1,10 @@
 stages:
   candidate_prepare:
-    cmd: python steps/1_preparation/candinates_preparation.py data/djinni data/prepared
+    cmd: python steps/1_preparation/candidates_preparation.py data/djinni data/prepared
     deps:
     - data/djinni
     - steps/1_preparation/
-    - steps/1_preparation/candinates_preparation.py
+    - steps/1_preparation/candidates_preparation.py
     outs:
     - data/prepared
     params:
