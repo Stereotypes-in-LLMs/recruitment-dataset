@@ -3,9 +3,10 @@ import numpy as np
 import logging
 import uuid
 
-from src.constants import SUPPORTED_LANGUAGES
+from src.constants import SUPPORTED_LANGUAGES, EMB_LANG_MODELS
 from src.helpers import concurrent_processor
 from src.lang_detector import lang_detection_func
+from src.embedding_creation import embedding_texts
 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -30,7 +31,19 @@ class Preprocessing:
         self.dataset = pd.read_csv(input_path)
         self.output_path = output_path
 
-    def drop_duplicates(self, dataset_type:str ) -> None:
+    def process(self) -> None:
+        """
+        Preprocess dataset
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        raise NotImplementedError('Preprocessing class is abstract. Please use one of the child classes.')
+
+    def _drop_duplicates(self, dataset_type:str ) -> None:
         """"
         Drop duplicates in dataset
         
@@ -44,7 +57,7 @@ class Preprocessing:
         logging.info(f"Dropping duplicates in {dataset_type} dataframe...")
         self.dataset.drop_duplicates(inplace=True)
 
-    def lang_detection(self, column_name: str) -> None:
+    def _lang_detection(self, column_name: str) -> None:
         """"
         Detect language in column
         
@@ -63,7 +76,7 @@ class Preprocessing:
         self.dataset = self.dataset.merge(lang_detect_df, on=column_name, how='left')
         logging.info(f"Detecting language in {column_name} column finished.")
 
-    def filter_supported_languages(self, column_name: str) -> None:
+    def _filter_supported_languages(self, column_name: str) -> None:
         """"
         Filter supported languages in column
         
@@ -94,13 +107,67 @@ class Preprocessing:
         namespace = uuid.NAMESPACE_URL
         self.dataset['id'] = self.dataset[unique_column].apply(lambda x: uuid.uuid5(namespace, x))
         logging.info("Creating ID column finished.")
+
+    def _filter_by_embedding_similarity(self, 
+                                        column_name: str, 
+                                        lang: str,
+                                        threshold: float) -> pd.DataFrame:
+        """
+        Filter by embedding similarity
+
+        Args:
+            column_name (str): column name
+            lang (str): language
+            threshold (float): threshold
+
+        Returns:
+            pd.DataFrame: filtered dataset for current language
+        """
+        logging.info(f"Filtering by embedding similarity in {column_name} column. Language {lang}...")
+        dataset = self.dataset[self.dataset[f'{column_name}_lang'] == lang].copy()
+        dataset.reset_index(drop=True, inplace=True)
+
+        # create embeddings
+        logging.info(f"Creating embeddings ...")
+        embeddings = embedding_texts(
+            texts=dataset[column_name].tolist(),
+            model_name=EMB_LANG_MODELS[lang]
+        )
+
+        logging.info("Start filtering...")
+        i = 0
+        while i < len(dataset):
+            # calculate similarity scores
+            scores = embeddings[i] @ embeddings.T
+            indexes = np.where(scores >= threshold)[0]
+            indexes = indexes[indexes != i]
+
+            # drop all duplicates with similarity score >= threshold
+            if indexes.tolist():
+                indexes = np.unique(indexes)
+                dataset.drop(indexes, inplace=True)
+                dataset.reset_index(drop=True, inplace=True)
+                embeddings = np.delete(embeddings, indexes, axis=0)
+            i += 1
+        logging.info(f"Filtering by embedding similarity in {column_name} column finished for {lang} language.")
+        return dataset
     
-    def save_dataset(self) -> None:
+    def save_dataset(self, 
+                     prefix: str = "") -> None:
         """"
         Save dataset to output path
+
+        Args:
+            prefix (str): prefix for output file name
         """
         logging.info("Saving dataset...")
-        self.dataset.to_csv(self.output_path, index=False)
+        # split output path
+        output_path = self.output_path.split('/')
+        # add to output path prefix
+        output_path[-1] = prefix + output_path[-1]
+        # join output path
+        output_path = '/'.join(output_path)
+        self.dataset.to_csv(output_path, index=False)
 
 
 class CandidatesPreprocessor(Preprocessing):
@@ -114,7 +181,8 @@ class CandidatesPreprocessor(Preprocessing):
                  processor_type: str = "candidates",
                  outlier_threshold: float = 0.05,
                  lang_detect_columns: list[str] = ["CV"],
-                 id_component: str = 'CV') -> None:
+                 id_component: str = "CV",
+                 lang_emb_thresholds: dict = {'uk': 0.95, 'en': 0.9}) -> None:
         """
         CandidatesPreprocessing class constructor
 
@@ -125,6 +193,7 @@ class CandidatesPreprocessor(Preprocessing):
             outlier_threshold (float): outlier threshold
             lang_detect_columns (list[str]): columns to detect language
             id_component (str): id component name
+            lang_emb_thresholds (dict): language embedding thresholds
         """
         super().__init__(input_path, output_path)
 
@@ -132,13 +201,14 @@ class CandidatesPreprocessor(Preprocessing):
         self.outlier_threshold = outlier_threshold
         self.lang_detect_columns = lang_detect_columns
         self.id_component = id_component
+        self.lang_emb_thresholds = lang_emb_thresholds
 
     def process(self):
         """"
         Preprocess candidates dataset
         """
         # drop duplicates in candidates dataframe
-        self.drop_duplicates(self.processor_type)
+        self._drop_duplicates(self.processor_type)
 
         # preprocess POSITION column
         self._position_processing()
@@ -152,11 +222,27 @@ class CandidatesPreprocessor(Preprocessing):
 
         # lang detect and filter supported languages
         for column in self.lang_detect_columns:
-            self.lang_detection(column)
-            self.filter_supported_languages(column)
+            self._lang_detection(column)
+            self._filter_supported_languages(column)
 
         # create ID column
         self._create_id(self.id_component)
+
+        # save intermediate dataset
+        self.save_dataset(prefix="intermediate_")
+
+        # compare CVs by embedding similarity
+        emb_filter_dfs = []
+        for lang, threshold in self.lang_emb_thresholds.items():
+            emb_filter_dfs.append(self._filter_by_embedding_similarity( 
+                column_name=self.id_component, 
+                lang=lang,
+                threshold=threshold
+            ))
+
+        # merge all filtered dataframes
+        self.dataset = pd.concat(emb_filter_dfs)
+        self.dataset.reset_index(drop=True, inplace=True)
 
     def _position_processing(self) -> None:
         """"
