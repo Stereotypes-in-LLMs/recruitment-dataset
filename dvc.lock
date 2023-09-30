@@ -10,9 +10,9 @@ stages:
       nfiles: 5
     - path: steps/1_preparation/
       hash: md5
-      md5: edfe5f8b5b998cc6897d0ca963d1504d.dir
-      size: 26421
-      nfiles: 10
+      md5: bc175577a865d2bbc58a78ff45b17788.dir
+      size: 35479
+      nfiles: 12
     - path: steps/1_preparation/candidates_preparation.py
       hash: md5
       md5: 0d119859b0cb5f0a65a09c74e17a1d33
@@ -24,6 +24,6 @@ stages:
     outs:
     - path: data/prepared
       hash: md5
-      md5: dc397ba247c7241b8396d32c9a8ae067.dir
-      size: 116515
-      nfiles: 1
+      md5: 50def61f0eb7230d74bc0a8e110a4b70.dir
+      size: 495080
+      nfiles: 2
