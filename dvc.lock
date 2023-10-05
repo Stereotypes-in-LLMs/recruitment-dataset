@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   candidate_prepare:
-    cmd: python steps/1_preparation/candidates_preparation.py data/djinni data/prepared
+    cmd: python steps/1_preparation/candidates_preparation.py data/djinni data/prepared_candidates
     deps:
     - path: data/djinni
       hash: md5
@@ -10,9 +10,9 @@ stages:
       nfiles: 5
     - path: steps/1_preparation/
       hash: md5
-      md5: bc175577a865d2bbc58a78ff45b17788.dir
-      size: 35479
-      nfiles: 12
+      md5: be320725d58f2e4a6b49419814e3e5ee.dir
+      size: 50956
+      nfiles: 15
     - path: steps/1_preparation/candidates_preparation.py
       hash: md5
       md5: 0d119859b0cb5f0a65a09c74e17a1d33
@@ -22,8 +22,8 @@ stages:
         candidate_prepare.input_file: candidates.csv
         candidate_prepare.output_file: candidates_prepared.csv
     outs:
-    - path: data/prepared
+    - path: data/prepared_candidates
       hash: md5
-      md5: 50def61f0eb7230d74bc0a8e110a4b70.dir
-      size: 495080
+      md5: 2f7b39d612f44e73b782250b933dfa59.dir
+      size: 974223910
       nfiles: 2
