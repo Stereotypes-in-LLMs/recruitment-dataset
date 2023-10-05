@@ -304,3 +304,135 @@ class CandidatesPreprocessor(Preprocessing):
         # reset index
         self.dataset.reset_index(drop=True, inplace=True)
         logging.info("Dropping CV duplicates finished.")
+
+
+class JobsPreprocessor(Preprocessing):
+    """
+    JobsPreprocessing class
+    """
+
+    def __init__(self, 
+                 input_path: str, 
+                 output_path: str,
+                 processor_type: str = "jobs",
+                 outlier_threshold: float = 0.05,
+                 lang_detect_columns: list[str] = ["Long Description"],
+                 id_component: str = "Long Description",
+                 lang_emb_thresholds: dict = {'uk': 0.95, 'en': 0.9}) -> None:
+        """
+        JobsPreprocessing class constructor
+
+        Args:
+            input_path (str): path to input dataset
+            output_path (str): path to output dataset
+            processor_type (str): processor type
+            lang_detect_columns (list[str]): columns to detect language
+            id_component (str): id component name
+            lang_emb_thresholds (dict): language embedding thresholds
+        """
+        super().__init__(input_path, output_path)
+
+        self.processor_type = processor_type
+        self.outlier_threshold = outlier_threshold
+        self.lang_detect_columns = lang_detect_columns
+        self.id_component = id_component
+        self.lang_emb_thresholds = lang_emb_thresholds
+
+    def process(self):
+        """"
+        Preprocess jobs dataset
+        """
+
+        # drop duplicates in jobs dataframe
+        self._drop_duplicates(self.processor_type)
+
+        # drop empty long description
+        self._drop_empty_long_description()   
+        # drop long description outliers
+        self._drop_long_description_outliers()
+        # drop long description duplicates
+        self._drop_long_description_duplicates()
+
+        # drop rows with empty company name
+        self._drop_empty_company_name()
+
+        # lang detect and filter supported languages
+        for column in self.lang_detect_columns:
+            self._lang_detection(column)
+            self._filter_supported_languages(column)
+
+        # create ID column
+        self._create_id(self.id_component)
+
+        # save intermediate dataset
+        self.save_dataset(prefix="intermediate_")
+
+        # compare long descriptions by embedding similarity
+        emb_filter_dfs = []
+        for lang, threshold in self.lang_emb_thresholds.items():
+            emb_filter_dfs.append(self._filter_by_embedding_similarity( 
+                column_name=self.id_component, 
+                lang=lang,
+                threshold=threshold
+            ))
+
+        # merge all filtered dataframes
+        self.dataset = pd.concat(emb_filter_dfs)
+        self.dataset.reset_index(drop=True, inplace=True)
+
+    def _drop_empty_long_description(self) -> None:
+        """
+        Drop empty long description
+
+        Returns:
+            None
+        """
+        logging.info("Dropping empty long description...")
+        # drop empty long description
+        self.dataset.dropna(subset=['LongDescription'], inplace=True)
+        # reset index
+        self.dataset.reset_index(drop=True, inplace=True)
+        logging.info("Dropping empty long description finished.")
+
+    def _drop_long_description_outliers(self) -> None:
+        """
+        Drop long description outliers
+
+        Returns:
+            None
+        """
+        logging.info("Dropping long description outliers...")
+        # drop long description outliers
+        self.dataset[self.dataset['Long Description'].str.len() < \
+                     self.dataset['Long Description'].str.len().quantile(self.outlier_threshold)]
+        # reset index
+        self.dataset.reset_index(drop=True, inplace=True)
+        logging.info("Dropping long description outliers finished.")
+
+    def _drop_long_description_duplicates(self) -> None:
+        """
+        Drop long description duplicates
+
+        Returns:
+            None
+        """
+        logging.info("Dropping long description duplicates...")
+        # drop long description duplicates
+        self.dataset.drop_duplicates(subset=['Long Description'], inplace=True, keep='first')
+        # reset index
+        self.dataset.reset_index(drop=True, inplace=True)
+        logging.info("Dropping long description duplicates finished.")
+
+    def _drop_empty_company_name(self) -> None:
+        """
+        Drop empty company name
+
+        Returns:
+            None
+        """
+        logging.info("Dropping empty company name...")
+        # drop empty company name
+        self.dataset.dropna(subset=['Company Name'], inplace=True)
+        # reset index
+        self.dataset.reset_index(drop=True, inplace=True)
+        logging.info("Dropping empty company name finished.")

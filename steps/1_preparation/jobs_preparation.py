@@ -1,12 +1,9 @@
 import os
 import sys
-import numpy as np
-import pandas as pd
 
-import warnings
-warnings.filterwarnings("ignore")
 import dvc.api
 import logging
+from src.preprocessing import JobsPreprocessor
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -17,33 +14,33 @@ if len(sys.argv) != 3:
     )
     sys.exit(1)
 
+
 def main():
+    # Create output directory
     output_dir = sys.argv[2]
     os.makedirs(output_dir, exist_ok=True)
 
     # Read data
     input_folder = sys.argv[1]
-
     params = dvc.api.params_show()
-    jobs_file = params['prepare']['jobs_file']
-    candidates_file = params['prepare']['candidates_file']
+    candidates_input_file_path = os.path.join(input_folder, params['job_prepare']['input_file'])
+    candidates_output_file_path = os.path.join(output_dir, params['job_prepare']['output_file'])
 
-    jobs = pd.read_csv(os.path.join(input_folder, jobs_file))
-    candidates = pd.read_csv(os.path.join(input_folder, candidates_file))
+    # Preprocessing
+    preprocessor = JobsPreprocessor(
+        input_path=candidates_input_file_path,
+        output_path=candidates_output_file_path
+    )
+    preprocessor.process()
 
-    print("Jobs shape: ", jobs.shape)
-    print("Candidates shape: ", candidates.shape)
+    # logging output dataset shape
+    logging.info(f"Output Jobs dataset shape: {preprocessor.dataset.shape}")
 
-    from IPython.display import display
-    display(jobs.head())
-    display(candidates.head())
-
-
-    # save
-    # dataset.to_csv(os.path.join(output_dir, 'preprocessed.csv'),index=False)
+    # Save data
+    preprocessor.save_dataset()
 
 
 if __name__ == "__main__":
-    logging.info("Starting preparation...")
+    logging.info("Starting Jobs dataset preparation...")
     main()
-    logging.info("Finished preparation.")
+    logging.info("Finished Jobs dataset preparation.")

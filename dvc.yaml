@@ -1,12 +1,24 @@
 stages:
   candidate_prepare:
-    cmd: python steps/1_preparation/candidates_preparation.py data/djinni data/prepared
+    cmd: python steps/1_preparation/candidates_preparation.py data/djinni data/prepared_candidates
     deps:
     - data/djinni
     - steps/1_preparation/
     - steps/1_preparation/candidates_preparation.py
     outs:
-    - data/prepared
+    - data/prepared_candidates
     params:
     - candidate_prepare.input_file
     - candidate_prepare.output_file
+
+  job_prepare:
+    cmd: python steps/1_preparation/jobs_preparation.py data/djinni data/prepared_jobs
+    deps:
+    - data/djinni
+    - steps/1_preparation/
+    - steps/1_preparation/jobs_preparation.py
+    outs:
+    - data/prepared_jobs
+    params:
+    - job_prepare.input_file
+    - job_prepare.output_file
