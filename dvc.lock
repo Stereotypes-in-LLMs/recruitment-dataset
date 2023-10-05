@@ -27,3 +27,30 @@ stages:
       md5: 2f7b39d612f44e73b782250b933dfa59.dir
       size: 974223910
       nfiles: 2
+  job_prepare:
+    cmd: python steps/1_preparation/jobs_preparation.py data/djinni data/prepared_jobs
+    deps:
+    - path: data/djinni
+      hash: md5
+      md5: 5ff70f3e8862f06a404c09a7eca5cd0f.dir
+      size: 1276445163
+      nfiles: 5
+    - path: steps/1_preparation/
+      hash: md5
+      md5: 7f425427f4df111bcb6620eeaa27896b.dir
+      size: 56625
+      nfiles: 15
+    - path: steps/1_preparation/jobs_preparation.py
+      hash: md5
+      md5: 1a1b18d9536f85a6c4e7c5eebb38a4a6
+      size: 1257
+    params:
+      params.yaml:
+        job_prepare.input_file: jobs.csv
+        job_prepare.output_file: jobs_prepared.csv
+    outs:
+    - path: data/prepared_jobs
+      hash: md5
+      md5: 8563ef764b9ff3c57967cbf45a7f5884.dir
+      size: 208586
+      nfiles: 2

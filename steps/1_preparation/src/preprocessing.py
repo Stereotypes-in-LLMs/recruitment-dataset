@@ -389,7 +389,7 @@ class JobsPreprocessor(Preprocessing):
         """
         logging.info("Dropping empty long description...")
         # drop empty long description
-        self.dataset.dropna(subset=['LongDescription'], inplace=True)
+        self.dataset.dropna(subset=['Long Description'], inplace=True)
         # reset index
         self.dataset.reset_index(drop=True, inplace=True)
         logging.info("Dropping empty long description finished.")
