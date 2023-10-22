@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 if len(sys.argv) != 3:
     sys.stderr.write('Arguments error. Usage:\n')
     sys.stderr.write(
-        '\tpython3 prepare.py input_dir output-dir\n'
+        '\tpython3 prepare.py input_dir output_dir\n'
     )
     sys.exit(1)
 

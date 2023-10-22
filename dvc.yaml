@@ -22,3 +22,45 @@ stages:
     params:
     - job_prepare.input_file
     - job_prepare.output_file
+
+  candidate_vect_title:
+    cmd: python steps/2_title_vectorize_and_matching/title_vectorize.py data/prepared_candidates data/title_vect_candidates candidate_matching_vect
+    deps:
+    - data/prepared_candidates
+    - steps/2_title_vectorize_and_matching
+    - steps/2_title_vectorize_and_matching/title_vectorize.py
+    outs:
+    - data/title_vect_candidates
+    params:
+    - candidate_matching_vect.input_file
+    - general_matching_vect.output_emb_file
+    - general_matching_vect.output_id_file
+    - general_matching_vect.vectorize_column
+
+  job_vect_title:
+    cmd: python steps/2_title_vectorize_and_matching/title_vectorize.py data/prepared_jobs data/title_vect_jobs job_matching_vect
+    deps:
+    - data/prepared_jobs
+    - steps/2_title_vectorize_and_matching
+    - steps/2_title_vectorize_and_matching/title_vectorize.py
+    outs:
+    - data/title_vect_jobs
+    params:
+    - job_matching_vect.input_file
+    - general_matching_vect.output_emb_file
+    - general_matching_vect.output_id_file
+    - general_matching_vect.vectorize_column
+
+  groups_matching:
+    cmd: python steps/2_title_vectorize_and_matching/groups_matching.py data/prepared_candidates data/prepared_jobs data/raw_groups
+    deps:
+    - data/prepared_candidates
+    - data/prepared_jobs
+    - steps/2_title_vectorize_and_matching
+    - steps/2_title_vectorize_and_matching/title_vectorize.py
+    outs:
+    - data/raw_groups
+    params:
+    - groups_matching.input_candidates
+    - groups_matching.input_jobs
+    - groups_matching.output_file

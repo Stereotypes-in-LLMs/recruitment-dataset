@@ -5,3 +5,19 @@ candidate_prepare:
 job_prepare:
   input_file: jobs.csv
   output_file: jobs_prepared.csv
+
+general_matching_vect:
+  output_emb_file: emb_index_{lang}.index
+  output_id_file: emb_id_map_{lang}.json
+  vectorize_column: Position
+
+candidate_matching_vect:
+  input_file: candidates_prepared.csv
+
+job_matching_vect:
+  input_file: jobs_prepared.csv
+
+groups_matching:
+  input_candidates: candidates_prepared.csv
+  input_jobs: jobs_prepared.csv
+  output_file: groups.json

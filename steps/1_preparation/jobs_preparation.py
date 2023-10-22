@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 if len(sys.argv) != 3:
     sys.stderr.write('Arguments error. Usage:\n')
     sys.stderr.write(
-        '\tpython3 prepare.py input_dir output-dir\n'
+        '\tpython3 prepare.py input_dir output_dir\n'
     )
     sys.exit(1)
 
@@ -23,13 +23,13 @@ def main():
     # Read data
     input_folder = sys.argv[1]
     params = dvc.api.params_show()
-    candidates_input_file_path = os.path.join(input_folder, params['job_prepare']['input_file'])
-    candidates_output_file_path = os.path.join(output_dir, params['job_prepare']['output_file'])
+    jobs_input_file_path = os.path.join(input_folder, params['job_prepare']['input_file'])
+    jobs_output_file_path = os.path.join(output_dir, params['job_prepare']['output_file'])
 
     # Preprocessing
     preprocessor = JobsPreprocessor(
-        input_path=candidates_input_file_path,
-        output_path=candidates_output_file_path
+        input_path=jobs_input_file_path,
+        output_path=jobs_output_file_path
     )
     preprocessor.process()
 
