@@ -11,6 +11,8 @@ general_matching_vect:
   output_id_file: emb_id_map_{lang}.json
   vectorize_column: Position
 
+vec_dim: 1024
+
 candidate_matching_vect:
   input_file: candidates_prepared.csv
 
@@ -20,4 +22,8 @@ job_matching_vect:
 groups_matching:
   input_candidates: candidates_prepared.csv
   input_jobs: jobs_prepared.csv
+  output_file: groups.json
+
+groups_matching_final:
+  input_file: candidates_prepared.csv
   output_file: groups.json

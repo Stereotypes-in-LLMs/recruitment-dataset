@@ -57,10 +57,25 @@ stages:
     - data/prepared_candidates
     - data/prepared_jobs
     - steps/2_title_vectorize_and_matching
-    - steps/2_title_vectorize_and_matching/title_vectorize.py
+    - steps/2_title_vectorize_and_matching/groups_matching.py
     outs:
     - data/raw_groups
     params:
     - groups_matching.input_candidates
     - groups_matching.input_jobs
     - groups_matching.output_file
+
+  groups_matching_final:
+    cmd: python steps/2_title_vectorize_and_matching/final_matching.py data/prepared_candidates data/raw_groups data/title_vect_jobs data/title_vect_candidates data/final_groups
+    deps:
+    - data/prepared_candidates
+    - data/title_vect_jobs
+    - data/title_vect_candidates
+    - steps/2_title_vectorize_and_matching
+    - steps/2_title_vectorize_and_matching/final_matching.py
+    outs:
+    - data/final_groups
+    params:
+    - groups_matching_final.input_file
+    - groups_matching_final.output_file
+    - vec_dim
