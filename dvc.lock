@@ -54,3 +54,97 @@ stages:
       md5: 8563ef764b9ff3c57967cbf45a7f5884.dir
       size: 208586
       nfiles: 2
+  candidate_vect_title:
+    cmd: python steps/2_title_vectorize_and_matching/title_vectorize.py data/prepared_candidates
+      data/title_vect_candidates candidate_matching_vect
+    deps:
+    - path: data/prepared_candidates
+      hash: md5
+      md5: 2f7b39d612f44e73b782250b933dfa59.dir
+      size: 974223910
+      nfiles: 2
+    - path: steps/2_title_vectorize_and_matching
+      hash: md5
+      md5: 489bed8594294275029991b3784192f4.dir
+      size: 15550
+      nfiles: 7
+    - path: steps/2_title_vectorize_and_matching/title_vectorize.py
+      hash: md5
+      md5: 6483db775c98de6f3f1209f04a842eaf
+      size: 2155
+    params:
+      params.yaml:
+        candidate_matching_vect.input_file: candidates_prepared.csv
+        general_matching_vect.output_emb_file: emb_index_{lang}.index
+        general_matching_vect.output_id_file: emb_id_map_{lang}.json
+        general_matching_vect.vectorize_column: Position
+    outs:
+    - path: data/title_vect_candidates
+      hash: md5
+      md5: 4cda559cd98b4f54a295dda9531ae362.dir
+      size: 975611656
+      nfiles: 4
+  job_vect_title:
+    cmd: python steps/2_title_vectorize_and_matching/title_vectorize.py data/prepared_jobs
+      data/title_vect_jobs job_matching_vect
+    deps:
+    - path: data/prepared_jobs
+      hash: md5
+      md5: d6bdb78055b494b6282d18d68316b1ff.dir
+      size: 1155557043
+      nfiles: 2
+    - path: steps/2_title_vectorize_and_matching
+      hash: md5
+      md5: 489bed8594294275029991b3784192f4.dir
+      size: 15550
+      nfiles: 7
+    - path: steps/2_title_vectorize_and_matching/title_vectorize.py
+      hash: md5
+      md5: 6483db775c98de6f3f1209f04a842eaf
+      size: 2155
+    params:
+      params.yaml:
+        general_matching_vect.output_emb_file: emb_index_{lang}.index
+        general_matching_vect.output_id_file: emb_id_map_{lang}.json
+        general_matching_vect.vectorize_column: Position
+        job_matching_vect.input_file: jobs_prepared.csv
+    outs:
+    - path: data/title_vect_jobs
+      hash: md5
+      md5: 84f9ff0b18ff22875084699462ea3bc0.dir
+      size: 703363631
+      nfiles: 4
+  groups_matching:
+    cmd: python steps/2_title_vectorize_and_matching/groups_matching.py data/prepared_candidates
+      data/prepared_jobs data/raw_groups
+    deps:
+    - path: data/prepared_candidates
+      hash: md5
+      md5: 2f7b39d612f44e73b782250b933dfa59.dir
+      size: 974223910
+      nfiles: 2
+    - path: data/prepared_jobs
+      hash: md5
+      md5: d6bdb78055b494b6282d18d68316b1ff.dir
+      size: 1155557043
+      nfiles: 2
+    - path: steps/2_title_vectorize_and_matching
+      hash: md5
+      md5: 6ec566060cb57c4b5d19c6b524e41545.dir
+      size: 20511
+      nfiles: 8
+    - path: steps/2_title_vectorize_and_matching/title_vectorize.py
+      hash: md5
+      md5: 6483db775c98de6f3f1209f04a842eaf
+      size: 2155
+    params:
+      params.yaml:
+        groups_matching.input_candidates: candidates_prepared.csv
+        groups_matching.input_jobs: jobs_prepared.csv
+        groups_matching.output_file: groups.json
+    outs:
+    - path: data/raw_groups
+      hash: md5
+      md5: 0fc47babe997535d38599cdf47cec1ba.dir
+      size: 715765480
+      nfiles: 1

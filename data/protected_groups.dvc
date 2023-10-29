@@ -1,0 +1,6 @@
+outs:
+- md5: db2125318d01f262c2a889c0afca73c6.dir
+  size: 10686046724
+  nfiles: 121
+  hash: md5
+  path: protected_groups
