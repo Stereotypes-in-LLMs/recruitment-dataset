@@ -60,9 +60,9 @@ class GroupMatcher:
                                                                self.df_candidates['year_exp'].tolist(),
                                                                self.df_candidates['CV_lang'].tolist())):
             # filter jobs by position, year_exp and lang
-            df_jobs_filtered = self.df_jobs[(self.df_jobs['position'] == cand_position) &
+            df_jobs_filtered = self.df_jobs[(self.df_jobs['Position'] == cand_position) &
                                             (self.df_jobs['year_exp'] == year_exp) &
-                                            (self.df_jobs['Description_lang'] == cand_lang)]
+                                            (self.df_jobs['Long Description_lang'] == cand_lang)]
             # get job ids
             job_ids = df_jobs_filtered['id'].tolist()
 

@@ -41,11 +41,13 @@ def main():
     for lang in EMB_LANG_MODELS.keys():
         logging.info(f"Processing {lang} language...")
         # create embedding store
+        # use uk embedding model for all languages, because it is multilingual 
+        # and we need to avoid some problems with different languages in Position column if it will be.
         embedding_store = EmbeddingStore(
-            model_id=EMB_LANG_MODELS[lang],
+            model_id=EMB_LANG_MODELS['uk'],
             index_path=output_emb_file_path.format(lang=lang),
             id_mapping_path=output_id_file_path.format(lang=lang),
-            dim=MODELS_DIM[lang]
+            dim=MODELS_DIM['uk']
         )
 
         # process dataframe

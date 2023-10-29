@@ -31,7 +31,7 @@ def main():
     params = dvc.api.params_show()
     input_candidates_file_path = os.path.join(input_candidates_folder, params['groups_matching']['input_candidates'])
     input_jobs_file_path = os.path.join(input_jobs_folder, params['groups_matching']['input_jobs'])
-    output_emb_file_path = os.path.join(output_dir, params['groups_matching']['output_emb_file'])
+    output_emb_file_path = os.path.join(output_dir, params['groups_matching']['output_file'])
 
     # Create GroupMatcher object
     group_matcher = GroupMatcher(

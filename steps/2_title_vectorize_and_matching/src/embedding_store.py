@@ -19,7 +19,7 @@ class EmbeddingStore:
                  model_id: str, 
                  index_path: str, 
                  id_mapping_path: str, 
-                 dim:int =768) -> None:
+                 dim:int =1024) -> None:
         """
         Embedding Store constructor
 
@@ -27,7 +27,7 @@ class EmbeddingStore:
             model_id (str): model id
             index_path (str): index path
             id_mapping_path (str): id mapping path
-            dim (int, optional): embedding dimension. Defaults to 768.
+            dim (int, optional): embedding dimension. Defaults to 1024.
 
         Returns:
             None
@@ -36,7 +36,7 @@ class EmbeddingStore:
         self.model_id = model_id
         self.index_path = index_path
         self.id_mapping_path = id_mapping_path
-        self.model = SentenceTransformer(self.model_path, dim=dim)
+        self.model = SentenceTransformer(self.model_id)
         self.index = faiss.IndexIDMap(faiss.IndexFlatIP(dim))
 
     def process(self,
@@ -54,7 +54,7 @@ class EmbeddingStore:
         """
         # embedding texts
         logging.info(f'Embedding texts with {self.model_id} model')
-        embeddings = self.embedding_texts(df[vect_column].tolist(), self.model_id)
+        embeddings = self.embedding_texts(df[vect_column].tolist())
         logging.info(f'Embeddings shape: {embeddings.shape}')
 
         # mapping text ids to embeddings ids
