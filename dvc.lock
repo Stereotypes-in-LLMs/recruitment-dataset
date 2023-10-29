@@ -148,3 +148,42 @@ stages:
       md5: 0fc47babe997535d38599cdf47cec1ba.dir
       size: 715765480
       nfiles: 1
+  groups_matching_final:
+    cmd: python steps/2_title_vectorize_and_matching/final_matching.py data/prepared_candidates
+      data/raw_groups data/title_vect_jobs data/title_vect_candidates data/final_groups
+    deps:
+    - path: data/prepared_candidates
+      hash: md5
+      md5: 2f7b39d612f44e73b782250b933dfa59.dir
+      size: 974223910
+      nfiles: 2
+    - path: data/title_vect_candidates
+      hash: md5
+      md5: 4cda559cd98b4f54a295dda9531ae362.dir
+      size: 975611656
+      nfiles: 4
+    - path: data/title_vect_jobs
+      hash: md5
+      md5: 84f9ff0b18ff22875084699462ea3bc0.dir
+      size: 703363631
+      nfiles: 4
+    - path: steps/2_title_vectorize_and_matching
+      hash: md5
+      md5: 43c4b72e1af6d640505fbb63f98a9631.dir
+      size: 37067
+      nfiles: 9
+    - path: steps/2_title_vectorize_and_matching/final_matching.py
+      hash: md5
+      md5: 2b96447c33997e1c5c292f4df5a2a267
+      size: 2014
+    params:
+      params.yaml:
+        groups_matching_final.input_file: candidates_prepared.csv
+        groups_matching_final.output_file: groups.json
+        vec_dim: 1024
+    outs:
+    - path: data/final_groups
+      hash: md5
+      md5: fa82c5574d9f51dc6f52ec5681726141.dir
+      size: 697780040
+      nfiles: 1
