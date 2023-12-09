@@ -5,17 +5,17 @@ stages:
     deps:
     - path: data/djinni
       hash: md5
-      md5: 5ff70f3e8862f06a404c09a7eca5cd0f.dir
-      size: 1276445163
+      md5: 4daa4d1e04ca0e1cd2747e3a4798bdd0.dir
+      size: 1276095837
       nfiles: 5
     - path: steps/1_preparation/
       hash: md5
-      md5: be320725d58f2e4a6b49419814e3e5ee.dir
-      size: 50956
+      md5: cfe571258ebf19b4a9d330f05795a97a.dir
+      size: 56565
       nfiles: 15
     - path: steps/1_preparation/candidates_preparation.py
       hash: md5
-      md5: 0d119859b0cb5f0a65a09c74e17a1d33
+      md5: 4b7fda1a4640b9f0644ba8341c06e62b
       size: 1299
     params:
       params.yaml:
@@ -24,26 +24,26 @@ stages:
     outs:
     - path: data/prepared_candidates
       hash: md5
-      md5: 2f7b39d612f44e73b782250b933dfa59.dir
-      size: 974223910
+      md5: 4408cdb5a8027187898640443ae4b496.dir
+      size: 972830706
       nfiles: 2
   job_prepare:
     cmd: python steps/1_preparation/jobs_preparation.py data/djinni data/prepared_jobs
     deps:
     - path: data/djinni
       hash: md5
-      md5: 5ff70f3e8862f06a404c09a7eca5cd0f.dir
-      size: 1276445163
+      md5: 4daa4d1e04ca0e1cd2747e3a4798bdd0.dir
+      size: 1276095837
       nfiles: 5
     - path: steps/1_preparation/
       hash: md5
-      md5: 7f425427f4df111bcb6620eeaa27896b.dir
-      size: 56625
+      md5: cfe571258ebf19b4a9d330f05795a97a.dir
+      size: 56565
       nfiles: 15
     - path: steps/1_preparation/jobs_preparation.py
       hash: md5
-      md5: 1a1b18d9536f85a6c4e7c5eebb38a4a6
-      size: 1257
+      md5: 904d9041b49bc12aae028a21f6b26262
+      size: 1233
     params:
       params.yaml:
         job_prepare.input_file: jobs.csv
@@ -51,8 +51,8 @@ stages:
     outs:
     - path: data/prepared_jobs
       hash: md5
-      md5: 8563ef764b9ff3c57967cbf45a7f5884.dir
-      size: 208586
+      md5: d6bdb78055b494b6282d18d68316b1ff.dir
+      size: 1155557043
       nfiles: 2
   candidate_vect_title:
     cmd: python steps/2_title_vectorize_and_matching/title_vectorize.py data/prepared_candidates
@@ -60,14 +60,14 @@ stages:
     deps:
     - path: data/prepared_candidates
       hash: md5
-      md5: 2f7b39d612f44e73b782250b933dfa59.dir
-      size: 974223910
+      md5: 4408cdb5a8027187898640443ae4b496.dir
+      size: 972830706
       nfiles: 2
     - path: steps/2_title_vectorize_and_matching
       hash: md5
-      md5: 489bed8594294275029991b3784192f4.dir
-      size: 15550
-      nfiles: 7
+      md5: 43c4b72e1af6d640505fbb63f98a9631.dir
+      size: 37067
+      nfiles: 9
     - path: steps/2_title_vectorize_and_matching/title_vectorize.py
       hash: md5
       md5: 6483db775c98de6f3f1209f04a842eaf
@@ -95,9 +95,9 @@ stages:
       nfiles: 2
     - path: steps/2_title_vectorize_and_matching
       hash: md5
-      md5: 489bed8594294275029991b3784192f4.dir
-      size: 15550
-      nfiles: 7
+      md5: 43c4b72e1af6d640505fbb63f98a9631.dir
+      size: 37067
+      nfiles: 9
     - path: steps/2_title_vectorize_and_matching/title_vectorize.py
       hash: md5
       md5: 6483db775c98de6f3f1209f04a842eaf
@@ -120,8 +120,8 @@ stages:
     deps:
     - path: data/prepared_candidates
       hash: md5
-      md5: 2f7b39d612f44e73b782250b933dfa59.dir
-      size: 974223910
+      md5: 4408cdb5a8027187898640443ae4b496.dir
+      size: 972830706
       nfiles: 2
     - path: data/prepared_jobs
       hash: md5
@@ -130,13 +130,13 @@ stages:
       nfiles: 2
     - path: steps/2_title_vectorize_and_matching
       hash: md5
-      md5: 6ec566060cb57c4b5d19c6b524e41545.dir
-      size: 20511
-      nfiles: 8
-    - path: steps/2_title_vectorize_and_matching/title_vectorize.py
+      md5: 43c4b72e1af6d640505fbb63f98a9631.dir
+      size: 37067
+      nfiles: 9
+    - path: steps/2_title_vectorize_and_matching/groups_matching.py
       hash: md5
-      md5: 6483db775c98de6f3f1209f04a842eaf
-      size: 2155
+      md5: 5949abe9d770e2797eb30803a95c17b2
+      size: 1527
     params:
       params.yaml:
         groups_matching.input_candidates: candidates_prepared.csv
@@ -154,8 +154,8 @@ stages:
     deps:
     - path: data/prepared_candidates
       hash: md5
-      md5: 2f7b39d612f44e73b782250b933dfa59.dir
-      size: 974223910
+      md5: 4408cdb5a8027187898640443ae4b496.dir
+      size: 972830706
       nfiles: 2
     - path: data/title_vect_candidates
       hash: md5
