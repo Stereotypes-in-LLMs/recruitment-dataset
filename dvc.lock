@@ -130,9 +130,9 @@ stages:
       nfiles: 2
     - path: steps/2_title_vectorize_and_matching
       hash: md5
-      md5: 43c4b72e1af6d640505fbb63f98a9631.dir
-      size: 37067
-      nfiles: 9
+      md5: b61f3219f5d3f76227e3e652f19f8b30.dir
+      size: 44801
+      nfiles: 10
     - path: steps/2_title_vectorize_and_matching/groups_matching.py
       hash: md5
       md5: 5949abe9d770e2797eb30803a95c17b2
@@ -145,8 +145,8 @@ stages:
     outs:
     - path: data/raw_groups
       hash: md5
-      md5: 0fc47babe997535d38599cdf47cec1ba.dir
-      size: 715765480
+      md5: d9f1cb123315487943a4cff9f5116723.dir
+      size: 715302628
       nfiles: 1
   groups_matching_final:
     cmd: python steps/2_title_vectorize_and_matching/final_matching.py data/prepared_candidates
@@ -169,9 +169,9 @@ stages:
       nfiles: 4
     - path: steps/2_title_vectorize_and_matching
       hash: md5
-      md5: 43c4b72e1af6d640505fbb63f98a9631.dir
-      size: 37067
-      nfiles: 9
+      md5: b61f3219f5d3f76227e3e652f19f8b30.dir
+      size: 44801
+      nfiles: 10
     - path: steps/2_title_vectorize_and_matching/final_matching.py
       hash: md5
       md5: 2b96447c33997e1c5c292f4df5a2a267
@@ -184,6 +184,6 @@ stages:
     outs:
     - path: data/final_groups
       hash: md5
-      md5: fa82c5574d9f51dc6f52ec5681726141.dir
-      size: 697780040
+      md5: 51f59ea9d737b69de3adde3796da6959.dir
+      size: 697341552
       nfiles: 1
