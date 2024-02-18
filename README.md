@@ -82,4 +82,4 @@ For more information on DVC, refer to the [documentation](https://dvc.org/doc/st
 - [Stereotypes-in-LLMs](https://github.com/Stereotypes-in-LLMs)
 
 ## License
-This project is licensed under the [Apache 2.0 License](LICENSE).
+This project is licensed under the [Apache License 2.0](LICENSE).
