@@ -13,6 +13,18 @@ The preprocessed dataset has been split by languages and loaded into the Hugging
 - [Candidates Profiles English](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-candidate-profiles-english)
 - [Candidates Profiles Ukrainian](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-candidate-profiles-ukrainian)
 
+## Intended Use
+
+The Djinni dataset is leveraged for a variety of purposes, outlined as follows:
+
+1. It is instrumental in developing recommender systems and enhancing semantic search capabilities.
+2. The dataset plays a crucial role in the advancement of Large Language Models (LLMs). Specifically, it serves as potential training data for both English and Ukrainian domain-specific LLMs, enriching their understanding and generating capabilities within specialized recruitment contexts.
+3. Djinni dataset serves as a benchmark or training set to promote fairness in AI-assisted hiring, addressing bias and ensuring equitable selection processes.
+4. It streamlines recruitment by powering tools for automatic resume and job description creation.
+5. Essential for market analysis, it evaluates the tech sector's dynamics in Ukraine, including the impact of conflicts.
+6. It aids in topic discovery and trend analysis within the tech industry through modeling and classification.
+7. The dataset enables automatic identification of company domains, assisting in strategic market planning.
+
 ## Pipeline Management with DVC
 The pipeline for preprocessing and creating the recommender system has been managed using Data Version Control (DVC). DVC ensures reproducibility and tracks the dependencies and outputs of each step in the pipeline. Final outputs are JSON files with candidate IDs as keys and a list of matched job description IDs as values.
 
