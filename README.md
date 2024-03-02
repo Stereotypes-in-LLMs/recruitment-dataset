@@ -3,6 +3,9 @@
 ## Project Overview
 This project aims to preprocess raw data from [Djinni](https://djinni.co) service and develop a recommender system for matching candidates with potential jobs based on anonymized profiles of candidates and job descriptions. The preprocessing involves cleaning and organizing the data, while the recommender system utilizes natural language processing techniques to match candidates with suitable job descriptions.
 
+## Dataset Information
+ The Djinni Recruitment Dataset contains 150,000 job descriptions and 230,000 anonymized candidate CVs, posted between 2020-2023 on the [Djinni](https://djinni.co/) IT job platform. The dataset includes samples in English and Ukrainian. 
+
 ## Exploratory Data Analysis
 The exploratory data analysis (EDA) is provided in the notebook/EDA folder. These analyses offer insights into the characteristics of job descriptions and candidate profiles, aiding in understanding the data distribution and potential patterns.
 
@@ -15,15 +18,22 @@ The preprocessed dataset has been split by languages and loaded into the Hugging
 
 ## Intended Use
 
-The Djinni dataset is leveraged for a variety of purposes, outlined as follows:
+The Djinni dataset is designed with versatility in mind, supporting a wide range of applications:
 
-1. It is instrumental in developing recommender systems and enhancing semantic search capabilities.
-2. The dataset plays a crucial role in the advancement of Large Language Models (LLMs). Specifically, it serves as potential training data for both English and Ukrainian domain-specific LLMs, enriching their understanding and generating capabilities within specialized recruitment contexts.
-3. Djinni dataset serves as a benchmark or training set to promote fairness in AI-assisted hiring, addressing bias and ensuring equitable selection processes.
-4. It streamlines recruitment by powering tools for automatic resume and job description creation.
-5. Essential for market analysis, it evaluates the tech sector's dynamics in Ukraine, including the impact of conflicts.
-6. It aids in topic discovery and trend analysis within the tech industry through modeling and classification.
-7. The dataset enables automatic identification of company domains, assisting in strategic market planning.
+- **Recommender Systems and Semantic Search:** It serves as a key resource for enhancing job recommendation engines and semantic search functionalities, making the job search process more intuitive and tailored to individual preferences.
+
+- **Advancement of Large Language Models (LLMs):** The dataset provides invaluable training data for both English and Ukrainian domain-specific LLMs. It is instrumental in improving the models' understanding and generation capabilities, particularly in specialized recruitment contexts.
+
+- **Fairness in AI-assisted Hiring:** By serving as a benchmark for AI fairness, the Djinni dataset helps mitigate biases in AI-assisted recruitment processes, promoting more equitable hiring practices.
+
+- **Recruitment Automation:** The dataset enables the development of tools for automated creation of resumes and job descriptions, streamlining the recruitment process.
+
+- **Market Analysis:** It offers insights into the dynamics of Ukraine's tech sector, including the impacts of conflicts, aiding in comprehensive market analysis.
+
+- **Trend Analysis and Topic Discovery:** The dataset facilitates modeling and classification for trend analysis and topic discovery within the tech industry.
+
+- **Strategic Planning:** By enabling the automatic identification of company domains, the dataset assists in strategic market planning.
+
 
 ## Pipeline Management with DVC
 The pipeline for preprocessing and creating the recommender system has been managed using Data Version Control (DVC). DVC ensures reproducibility and tracks the dependencies and outputs of each step in the pipeline. Final outputs are JSON files with candidate IDs as keys and a list of matched job description IDs as values.
