@@ -11,10 +11,10 @@ The exploratory data analysis (EDA) is provided in the notebook/EDA folder. Thes
 
 ## Dataset Split and Loading
 The preprocessed dataset has been split by languages and loaded into the HuggingFace Dataset Hub for easy access. The following datasets are available:
-- [Job Descriptions English](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-job-descriptions-english)
-- [Job Descriptions Ukrainian](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-job-descriptions-ukrainian)
-- [Candidates Profiles English](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-candidate-profiles-english)
-- [Candidates Profiles Ukrainian](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-candidate-profiles-ukrainian)
+- [Job Descriptions English](https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english)
+- [Job Descriptions Ukrainian](https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-ukrainian)
+- [Candidates Profiles English](https://huggingface.co/datasets/lang-uk/recruitment-dataset-candidate-profiles-english)
+- [Candidates Profiles Ukrainian](https://huggingface.co/datasets/lang-uk/recruitment-dataset-candidate-profiles-ukrainian)
 
 ## Intended Use
 
