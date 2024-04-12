@@ -100,6 +100,21 @@ Follow these steps to install and set up the project:
 
 For more information on DVC, refer to the [documentation](https://dvc.org/doc/start/data-management/data-versioning).
 
+## BibTeX entry and citation info
+*When publishing results based on this dataset please refer to:*
+```bibtex
+@inproceedings{djinni,
+    title = "Introducing the {D}jinni {R}ecruitment {D}ataset: A Corpus of Anonymized {CV}s and Job Postings",
+    author = "Drushchak, Nazarii  and
+              Romanyshyn, Mariana",
+    booktitle = "Proceedings of the Third Ukrainian Natural Language Processing Workshop",
+    month = may,
+    year = "2024",
+    address = "Torino, Italy",
+    publisher = "European Language Resources Association",
+}
+```
+
 ## Contributors
 - [Stereotypes-in-LLMs](https://github.com/Stereotypes-in-LLMs)
 
