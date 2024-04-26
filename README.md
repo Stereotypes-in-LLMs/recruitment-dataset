@@ -107,7 +107,7 @@ For more information on DVC, refer to the [documentation](https://dvc.org/doc/st
     title = "Introducing the {D}jinni {R}ecruitment {D}ataset: A Corpus of Anonymized {CV}s and Job Postings",
     author = "Drushchak, Nazarii  and
               Romanyshyn, Mariana",
-    booktitle = "Proceedings of the Third Ukrainian Natural Language Processing Workshop",
+    booktitle = "Proceedings of the Third Ukrainian Natural Language Processing Workshop (UNLP) @LREC-COLING-2024",
     month = may,
     year = "2024",
     address = "Torino, Italy",
