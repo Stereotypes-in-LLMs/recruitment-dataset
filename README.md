@@ -103,15 +103,21 @@ For more information on DVC, refer to the [documentation](https://dvc.org/doc/st
 ## BibTeX entry and citation info
 *When publishing results based on this dataset please refer to:*
 ```bibtex
-@inproceedings{djinni,
-    title = "Introducing the {D}jinni {R}ecruitment {D}ataset: A Corpus of Anonymized {CV}s and Job Postings",
+@inproceedings{drushchak-romanyshyn-2024-introducing,
+    title = "Introducing the Djinni Recruitment Dataset: A Corpus of Anonymized {CV}s and Job Postings",
     author = "Drushchak, Nazarii  and
-              Romanyshyn, Mariana",
-    booktitle = "Proceedings of the Third Ukrainian Natural Language Processing Workshop (UNLP) @LREC-COLING-2024",
+      Romanyshyn, Mariana",
+    editor = "Romanyshyn, Mariana  and
+      Romanyshyn, Nataliia  and
+      Hlybovets, Andrii  and
+      Ignatenko, Oleksii",
+    booktitle = "Proceedings of the Third Ukrainian Natural Language Processing Workshop (UNLP) @ LREC-COLING 2024",
     month = may,
     year = "2024",
-    address = "Torino, Italy",
-    publisher = "European Language Resources Association",
+    address = "Torino, Italia",
+    publisher = "ELRA and ICCL",
+    url = "https://aclanthology.org/2024.unlp-1.2",
+    pages = "8--13",
 }
 ```
 
