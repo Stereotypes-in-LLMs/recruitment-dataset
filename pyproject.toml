@@ -2,7 +2,7 @@
 name = "stereotypes-llms"
 version = "0.0.0"
 description = ""
-authors = ["naz2001r@gmail.com","drushchak.pn@ucu.edu.ua"]
+authors = ["xxxx"]
 license = "Apache-2.0"
 readme = "README.md"
 packages = [{include = "stereotypes-llms"}]
