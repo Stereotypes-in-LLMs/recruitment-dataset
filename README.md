@@ -100,29 +100,6 @@ Follow these steps to install and set up the project:
 
 For more information on DVC, refer to the [documentation](https://dvc.org/doc/start/data-management/data-versioning).
 
-## BibTeX entry and citation info
-*When publishing results based on this dataset please refer to:*
-```bibtex
-@inproceedings{drushchak-romanyshyn-2024-introducing,
-    title = "Introducing the Djinni Recruitment Dataset: A Corpus of Anonymized {CV}s and Job Postings",
-    author = "Drushchak, Nazarii  and
-      Romanyshyn, Mariana",
-    editor = "Romanyshyn, Mariana  and
-      Romanyshyn, Nataliia  and
-      Hlybovets, Andrii  and
-      Ignatenko, Oleksii",
-    booktitle = "Proceedings of the Third Ukrainian Natural Language Processing Workshop (UNLP) @ LREC-COLING 2024",
-    month = may,
-    year = "2024",
-    address = "Torino, Italia",
-    publisher = "ELRA and ICCL",
-    url = "https://aclanthology.org/2024.unlp-1.2",
-    pages = "8--13",
-}
-```
-
-## Contributors
-- [Stereotypes-in-LLMs](https://github.com/Stereotypes-in-LLMs)
 
 ## License
 This project is licensed under the [Apache License 2.0](LICENSE).
